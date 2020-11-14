@@ -1,19 +1,17 @@
-package client;
+package EPS;
 
-import server.IHello;
+import GCC.IGCC;
 
 import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
-public class Client {
+public class EPSClient {
 
-    private Client() {}
+    private EPSClient() {}
 
     public static void main(String[] args) {
 
         try {
-            IHello servicio = (IHello) Naming.lookup("rmi://localhost:9999/hello");
+            IGCC servicio = (IGCC) Naming.lookup("rmi://localhost:9999/GCC");
             String response = servicio.sayHello();
             System.out.println("response: " + response);
         } catch (Exception e) {
