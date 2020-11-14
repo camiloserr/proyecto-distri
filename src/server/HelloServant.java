@@ -14,6 +14,7 @@ public class HelloServant extends UnicastRemoteObject implements IHello {
     }
 
     public String sayHello() throws RemoteException {
+        System.out.println("Buena la rata");
         return "Hello, world!";
     }
 
