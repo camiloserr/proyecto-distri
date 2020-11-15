@@ -19,24 +19,44 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
         return "Hello, world!";
     }
 
-    public List<Boolean> pedirVacunas(int vA, int vB, int vC)
+    public List<Boolean> pedirVacunas(int vA, int vB, int vC, int servP)
     {
         List <Boolean> vacEntreadas = null;
+        IIPS servicio = pillarServicio( servP );
+        if( servicio != null )
+        {
+            try
+            {
+                String response = servicio.darVacunaActuales();
+                System.out.println("response: " + response);
+                vacEntreadas = servicio.pedirVacunas(vA,vB,vC);
+
+                response = servicio.darVacunaActuales();
+                System.out.println("response: " + response);
+            }catch (Exception e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
+            }
+        }
+
+
+        return vacEntreadas;
+
+    }
+
+    private IIPS pillarServicio(int servP) {
+
+        int port = 8879 + servP;
+        IIPS servicio = null;
         try
         {
-            IIPS servicio = (IIPS) Naming.lookup("rmi://localhost:8888/IPS");
-            String response = servicio.darVacunaActuales();
-            System.out.println("response: " + response);
-            vacEntreadas = servicio.pedirVacunas(vA,vB,vC);
-
-            response = servicio.darVacunaActuales();
-            System.out.println("response: " + response);
+            servicio = (IIPS) Naming.lookup("rmi://localhost:" + port + "/IPS" + servP );
         }catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
             e.printStackTrace();
         }
 
-        return vacEntreadas;
+        return servicio;
 
     }
 

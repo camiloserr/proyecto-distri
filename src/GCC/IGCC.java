@@ -7,5 +7,5 @@ import java.util.List;
 public interface IGCC extends Remote {
 
     String sayHello() throws RemoteException;
-    public List<Boolean> pedirVacunas(int vA, int vB, int vC) throws  RemoteException;
+    List<Boolean> pedirVacunas(int vA, int vB, int vC, int servP) throws  RemoteException;
 }
