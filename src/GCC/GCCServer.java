@@ -18,6 +18,9 @@ public class GCCServer {
         registry.rebind("GCC", new GCCServant());
 
         //consumo IPS
+
+        //La parte de consumir la pasé a las funciones remotas
+
         /*
         try {
             IIPS servicio = (IIPS) Naming.lookup("rmi://localhost:8888/IPS");

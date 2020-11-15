@@ -12,8 +12,7 @@ public class IPSServer {
         //Registry registry = LocateRegistry.createRegistry(8888);
         //registry.rebind("IPS", new IPSServant());
 
-
-        //Registry reg = null;
+        //Creo 4 puertos/IPSs suponiendo que sabemos cuántas IPSs hay
         int port = 8880;
         for(int i = 0 ; i < 4 ; i++)
         {

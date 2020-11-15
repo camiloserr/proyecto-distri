@@ -22,7 +22,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
     public List<Boolean> pedirVacunas(int vA, int vB, int vC, int servP)
     {
         List <Boolean> vacEntreadas = null;
-        IIPS servicio = pillarServicio( servP );
+        IIPS servicio = pillarServicio( servP ); //Pillar servicio se cambiaría por el método de escoger la mejor ips para la solicitud.
         if( servicio != null )
         {
             try
@@ -44,6 +44,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
     }
 
+    //Hace el lookup de la ips/pueto a la que se le pide las vacunas
     private IIPS pillarServicio(int servP) {
 
         int port = 8879 + servP;

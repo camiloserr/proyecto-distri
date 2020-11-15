@@ -19,6 +19,8 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
     }
 
+
+    //Cuántas vacunas tiene actualmente la IPS
     @Override
     public String darVacunaActuales() {
 
@@ -26,6 +28,8 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         return  vac;
     }
 
+    //Hace la petición y actualización de vacunas (No sé si RMI haga los bloqueos necesarios si hay más de una EPS pidiendo)
+    //Retorna una lista de las vacunas que entregó exitosamente (por ahora son o todas o ninguna de cada tipo)
     public List<Boolean> pedirVacunas(int vA, int vB, int vC )
     {
         boolean darA = false;
