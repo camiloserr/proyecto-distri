@@ -20,8 +20,10 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     }
 
     @Override
-    public String darVacuna(int i) {
-        return "toma tu vacuna #"+i;
+    public String darVacunaActuales() {
+
+        String vac = "Hay " + getVacunaA() + " A, " + getVacunaB() + " B, " + getVacunaC() + " C.";
+        return  vac;
     }
 
     public List<Boolean> pedirVacunas(int vA, int vB, int vC )
@@ -29,22 +31,25 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         boolean darA = false;
         boolean darB = false;
         boolean darC = false;
+        int cantA = getVacunaA();
+        int cantB = getVacunaB();
+        int cantC = getVacunaC();
         List< Boolean > vlist = new ArrayList<>();
 
-        if( getVacunaA() - vA < 0 )
+        if( cantA - vA >= 0 )
         {
             darA = true;
-            setVacunaA( getVacunaA() - vA );
+            setVacunaA( cantA - vA );
         }
-        if( getVacunaB() - vB < 0 )
+        if( cantB - vB >= 0 )
         {
             darB = true;
-            setVacunaB( getVacunaB() - vA );
+            setVacunaB( cantB - vB );
         }
-        if( getVacunaC() - vC < 0 )
+        if( cantC - vC >= 0 )
         {
             darC = true;
-            setVacunaC( getVacunaC() - vA );
+            setVacunaC( cantC  - vC );
         }
 
         vlist.add(darA);
@@ -66,19 +71,19 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     }
 
     public int getVacunaB() {
-        return vacunaA;
+        return vacunaB;
     }
 
     public void setVacunaB(int vacunaA) {
-        this.vacunaA = vacunaA;
+        this.vacunaB = vacunaA;
     }
 
     public int getVacunaC() {
-        return vacunaA;
+        return vacunaC;
     }
 
     public void setVacunaC(int vacunaA) {
-        this.vacunaA = vacunaA;
+        this.vacunaC = vacunaA;
     }
 
 }
