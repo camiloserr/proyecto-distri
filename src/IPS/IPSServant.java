@@ -11,11 +11,21 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     private int vacunaB;
     private int vacunaC;
 
+
+    // TODO: leer archivo para inicializar #vacuanas, puerto y nombre de la IPS
     protected IPSServant() throws RemoteException {
         super();
         setVacunaA( 10 );
         setVacunaB( 10 );
         setVacunaC( 10 );
+
+    }
+
+    protected IPSServant(int a, int b , int c) throws RemoteException {
+        super();
+        setVacunaA( a );
+        setVacunaB( b );
+        setVacunaC( b );
 
     }
 

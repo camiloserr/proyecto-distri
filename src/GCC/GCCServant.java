@@ -3,6 +3,7 @@ package GCC;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 import IPS.IIPS;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -11,8 +12,44 @@ import java.rmi.Naming;
 
 public class GCCServant extends UnicastRemoteObject implements IGCC {
 
+    private List<IIPS> services;
+    private int[][] matriz = {{10,10,10} , {10,10,10} , {10,10,10,}};
+
     public GCCServant() throws RemoteException {
         super();
+        initVariables();
+    }
+
+    /**
+     * Inicializa todas las variables leyendo del archivo
+     */
+    private void initVariables() {
+
+        //deberia leer esto del archivo
+
+        String ip[] = {"localhost", "localhost", "localhost"};
+
+        int port[] = {8881,8882,8883};
+
+        String name[] = {"IPS1", "IPS2", "IPS3"};
+
+        ////////////////
+
+        services = new ArrayList<IIPS>();
+
+        for(int i = 0 ; i <3 ; ++i) {
+            IIPS servicio = null;
+            try {
+                servicio = (IIPS) Naming.lookup("rmi://" + ip[i] + ":" + port[i] + "/" + name[i]);
+
+                //TODO: inicializar matriz
+                services.add(servicio);
+
+            } catch (Exception e) {
+                System.err.println("Client exception: " + e.toString());
+                e.printStackTrace();
+            }
+        }
     }
 
     public String sayHello(){
@@ -22,7 +59,8 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
     public List<Boolean> pedirVacunas(int vA, int vB, int vC, int servP)
     {
         List <Boolean> vacEntreadas = null;
-        IIPS servicio = pillarServicio( servP ); //Pillar servicio se cambiaría por el método de escoger la mejor ips para la solicitud.
+        // TODO: hacer algoritmo para saber a que IPS pedirle las vacunas
+        IIPS servicio = services.get(0); //Pillar servicio se cambiaría por el método de escoger la mejor ips para la solicitud.
         if( servicio != null )
         {
             try
@@ -44,22 +82,6 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
     }
 
-    //Hace el lookup de la ips/pueto a la que se le pide las vacunas
-    private IIPS pillarServicio(int servP) {
-
-        int port = 8879 + servP;
-        IIPS servicio = null;
-        try
-        {
-            servicio = (IIPS) Naming.lookup("rmi://localhost:" + port + "/IPS" + servP );
-        }catch (Exception e) {
-            System.err.println("Client exception: " + e.toString());
-            e.printStackTrace();
-        }
-
-        return servicio;
-
-    }
 
 
 }
