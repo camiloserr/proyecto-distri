@@ -1,23 +1,32 @@
-package GCC;
+package GCC.controller;
 
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import IPS.IIPS;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import GCC.model.IPSInfo;
+import GCC.persistence.GCCPersistence;
+import GCC.persistence.IGCCPersistence;
+import IPS.controller.IIPS;
 
 import java.rmi.Naming;
 
 public class GCCServant extends UnicastRemoteObject implements IGCC {
 
+    // Lista de los servicios (IIPS) que van a proveer las vacunas al GCC
     private List<IIPS> services;
-    private int[][] matriz = {{10,10,10} , {10,10,10} , {10,10,10,}};
+    // Mantiene la informacion de las IPS y sabe si el servidor esta activo o no
+    private List<IPSInfo> activeServices;
+    //persistencia
+    private IGCCPersistence persistence;
 
     public GCCServant() throws RemoteException {
         super();
+        persistence = new GCCPersistence("config.txt", "authentication.txt");
         initVariables();
+
     }
 
     /**
@@ -25,24 +34,19 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
      */
     private void initVariables() {
 
-        //deberia leer esto del archivo
+        //lee los datos de las ips del archivo de configuracion
+        activeServices = persistence.readConfigFile();
 
-        String ip[] = {"localhost", "localhost", "localhost"};
 
-        int port[] = {8881,8882,8883};
+        services = new ArrayList<>();
 
-        String name[] = {"IPS1", "IPS2", "IPS3"};
-
-        ////////////////
-
-        services = new ArrayList<IIPS>();
-
-        for(int i = 0 ; i <3 ; ++i) {
-            IIPS servicio = null;
+        for(int i = 0 ; i <activeServices.size() ; ++i) {
+            IIPS servicio;
+            IPSInfo  ips = activeServices.get(i);
             try {
-                servicio = (IIPS) Naming.lookup("rmi://" + ip[i] + ":" + port[i] + "/" + name[i]);
-
-                //TODO: inicializar matriz
+                //inicializa el servicio con los datos obtenidos del archivo de config
+                servicio = (IIPS) Naming.lookup("rmi://" + ips.getIp() + ":" + ips.getPort() + "/" + ips.getName());
+                ips.setActive(true);
                 services.add(servicio);
 
             } catch (Exception e) {
@@ -65,7 +69,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
         {
             try
             {
-                String response = servicio.darVacunaActuales();
+                int[] response = servicio.darVacunaActuales();
                 System.out.println("response: " + response);
                 vacEntreadas = servicio.pedirVacunas(vA,vB,vC);
 

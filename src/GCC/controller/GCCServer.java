@@ -1,13 +1,8 @@
-package GCC;
+package GCC.controller;
 
-import IPS.IIPS;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.List;
 
 public class GCCServer {
 

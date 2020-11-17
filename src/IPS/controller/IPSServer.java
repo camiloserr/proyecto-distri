@@ -1,6 +1,6 @@
-package IPS;
+package IPS.controller;
 
-import GCC.GCCServant;
+import IPS.controller.IPSServant;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

@@ -1,6 +1,6 @@
-package EPS;
+package EPS.controller;
 
-import GCC.IGCC;
+import GCC.controller.IGCC;
 
 import java.rmi.Naming;
 import java.util.List;
@@ -15,7 +15,6 @@ public class EPSClient {
             IGCC servicio = (IGCC) Naming.lookup("rmi://localhost:9999/GCC");
             List <Boolean> vacRecib = servicio.pedirVacunas(2,2,2, 1);
             System.out.println( "response: " + vacRecib.toString() );
-
 
             List <Boolean> vacRecib2 = servicio.pedirVacunas(2,2,2, 2);
             System.out.println( "response: " + vacRecib2.toString() );

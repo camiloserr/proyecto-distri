@@ -1,4 +1,4 @@
-package GCC;
+package GCC.controller;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
