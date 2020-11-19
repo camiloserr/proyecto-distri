@@ -24,7 +24,7 @@ public class GCCPersistenceUnitTest {
 
         //crea el archivo de pruebas
         try {
-            FileWriter myWriter = new FileWriter("testConfig.txt");
+            FileWriter myWriter = new FileWriter("src/gcc/tests/testConfig.txt");
             myWriter.write("IPS1:\n" +
                     "    ip: localhost\n" +
                     "    port: 8888\n" +
@@ -41,7 +41,7 @@ public class GCCPersistenceUnitTest {
         }
 
         //crea el persistence
-        IGCCPersistence persistence = new GCCPersistence("testConfig.txt", "authentiaction.txt");
+        IGCCPersistence persistence = new GCCPersistence("src/gcc/tests/testConfig.txt", "src/gcc/tests/authentiaction.txt");
         ArrayList<IPSInfo> res = persistence.readConfigFile();
 
         // crea el oraculo
@@ -62,7 +62,7 @@ public class GCCPersistenceUnitTest {
 
         //crea el archivo de pruebas
         try {
-            FileWriter myWriter = new FileWriter("testAuth.txt");
+            FileWriter myWriter = new FileWriter("src/gcc/tests/testAuth.txt");
             myWriter.write("usuario1:hash1\n" +
                     "usuario2:hash2\n" +
                     "usuario3:7e240de74fb1ed08fa08d38063f6a6a91462a815\n" +
@@ -74,7 +74,7 @@ public class GCCPersistenceUnitTest {
         }
 
         //crea el persistence
-        IGCCPersistence persistence = new GCCPersistence("testConfig.txt", "testAuth.txt");
+        IGCCPersistence persistence = new GCCPersistence("src/gcc/tests/testConfig.txt", "src/gcc/tests/testAuth.txt");
 
 
         assertEquals(true,persistence.authenticateUser("usuario1", "hash1"));
@@ -86,7 +86,7 @@ public class GCCPersistenceUnitTest {
     public void createUserReturnsTrue(){
         //crea el archivo de pruebas
         try {
-            FileWriter myWriter = new FileWriter("testAuth.txt");
+            FileWriter myWriter = new FileWriter("src/gcc/tests/testAuth.txt");
             myWriter.write("usuario1:hash1\n" +
                     "usuario2:hash2\n" +
                     "usuario3:7e240de74fb1ed08fa08d38063f6a6a91462a815\n" +
@@ -98,8 +98,10 @@ public class GCCPersistenceUnitTest {
         }
 
         //crea el persistence
-        IGCCPersistence persistence = new GCCPersistence("testConfig.txt", "testAuth.txt");
+        IGCCPersistence persistence = new GCCPersistence("src/gcc/tests/testConfig.txt", "src/gcc/tests/testAuth.txt");
 
+        // juan no deberia existir
+        assertEquals(false, persistence.existsUser("juan"));
         // agrega un usuario
         assertEquals(true, persistence.newUser("juan", "shadejuan" ));
         //verifica que el usuario este en el archivo ahora

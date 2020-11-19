@@ -1,9 +1,3 @@
-IPS1:
+IPS:
     ip: localhost
     port: 8888
-IPS2:
-    ip: localhost
-    port: 8889
-IPS3:
-    ip: localhost
-    port: 8881

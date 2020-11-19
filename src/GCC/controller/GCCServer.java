@@ -8,7 +8,7 @@ public class GCCServer {
 
     public static void main(String[] args) throws RemoteException {
 
-        //public mi servicio
+        //publico mi servicio
         Registry registry = LocateRegistry.createRegistry(9999);
         registry.rebind("GCC", new GCCServant());
 

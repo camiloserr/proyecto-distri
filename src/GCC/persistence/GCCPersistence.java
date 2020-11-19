@@ -35,6 +35,7 @@ public class GCCPersistence implements IGCCPersistence{
             File myObj = new File(configFileName);
             myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
+
                 IPSInfo ips = new IPSInfo();
                 // quita espacios en blanco
 
@@ -124,7 +125,7 @@ public class GCCPersistence implements IGCCPersistence{
         try {
             System.out.println("Usuario " + username + " ingresado");
             FileWriter myWriter = new FileWriter(authenticationFileName);
-            myWriter.write(username+":"+passHash);
+            myWriter.append(username+":"+passHash+"\n");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");

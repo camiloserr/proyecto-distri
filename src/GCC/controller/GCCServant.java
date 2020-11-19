@@ -3,8 +3,7 @@ package GCC.controller;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import GCC.model.IPSInfo;
 import GCC.persistence.GCCPersistence;
@@ -24,9 +23,8 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
     public GCCServant() throws RemoteException {
         super();
-        persistence = new GCCPersistence("config.txt", "authentication.txt");
+        persistence = new GCCPersistence("src/gcc/persistence/config.txt", "src/gcc/persistence/authentication.txt");
         initVariables();
-
     }
 
     /**
@@ -36,7 +34,6 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
         //lee los datos de las ips del archivo de configuracion
         activeServices = persistence.readConfigFile();
-
 
         services = new ArrayList<>();
 
@@ -60,31 +57,67 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
         return "Hello, world!";
     }
 
-    public List<Boolean> pedirVacunas(int vA, int vB, int vC, int servP)
+    public List<Boolean> pedirVacunas(int vA, int vB, int vC)
     {
-        List <Boolean> vacEntreadas = null;
-        // TODO: hacer algoritmo para saber a que IPS pedirle las vacunas
-        IIPS servicio = services.get(0); //Pillar servicio se cambiaría por el método de escoger la mejor ips para la solicitud.
+        List <Boolean> vacEntregadas = null;
+        int[] solicitudDeVacunas = {vA,vB,vC};
+        IIPS servicio = escogerIPS(solicitudDeVacunas);
         if( servicio != null )
         {
             try
             {
-                int[] response = servicio.darVacunaActuales();
-                System.out.println("response: " + response);
-                vacEntreadas = servicio.pedirVacunas(vA,vB,vC);
-
-                response = servicio.darVacunaActuales();
-                System.out.println("response: " + response);
+                vacEntregadas = servicio.pedirVacunas(vA,vB,vC);
+                System.out.println("Vacunas han sido pedidas");
             }catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
                 e.printStackTrace();
             }
         }
 
-
-        return vacEntreadas;
+        return vacEntregadas;
 
     }
+
+
+    private IIPS escogerIPS(int[] vac){
+        TreeMap<Integer, IIPS> serviciosQuePuedenResponder = new TreeMap<Integer, IIPS>(Collections.reverseOrder());
+        for(int i = 0 ; i < services.size() ; ++i){
+            IIPS ips = services.get(i);
+            int[] diffs = {-1,-1,-1};
+            try {
+                int vacunasDisponibles = 0;
+                boolean puede = false;
+                int[] diffsActuales = {0,0,0};
+
+                // pide las vacunas actuales a la IPS
+                int[] vacunasActuales = ips.darVacunaActuales();
+                System.out.println("La IPS "+activeServices.get(i).getName()+" tiene " +
+                        vacunasActuales[0] + " de A, " + vacunasActuales[1] + " de B y " +
+                        vacunasActuales[2] + " de C");
+
+
+                for(int j = 0 ; j<3 ; j++){
+                    diffsActuales[j] = vacunasActuales[j] - vac[j];
+                    if(diffsActuales[j] >= 0){
+                        vacunasDisponibles+=diffsActuales[j];
+                     }
+                }
+
+                serviciosQuePuedenResponder.put(vacunasDisponibles, ips);
+
+            }
+            catch(RemoteException e){
+                System.out.println("La IPS " + activeServices.get(i).getName() + " esta caida");
+                activeServices.get(i).setActive(false);
+            }
+        }
+
+        //TODO: ponerle el random porque ahi esta retornando la IIPS que le sobran mas vacunas
+        return serviciosQuePuedenResponder.get(serviciosQuePuedenResponder.lastKey());
+    }
+
+
+
 
 
 
