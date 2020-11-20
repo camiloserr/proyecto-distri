@@ -1,0 +1,3 @@
+IPS:
+    ip: localhost
+    port: 8888

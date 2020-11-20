@@ -1,4 +1,4 @@
-package IPS;
+package IPS.controller;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -35,9 +35,9 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
     //Cuántas vacunas tiene actualmente la IPS
     @Override
-    public String darVacunaActuales() {
+    public int[] darVacunaActuales() {
 
-        String vac = "Hay " + getVacunaA() + " A, " + getVacunaB() + " B, " + getVacunaC() + " C.";
+        int[] vac = {vacunaA, vacunaB, vacunaC};
         return  vac;
     }
 
