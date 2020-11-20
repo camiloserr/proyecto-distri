@@ -21,13 +21,16 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
     }
 
-    protected IPSServant(int a, int b , int c) throws RemoteException {
+
+    public IPSServant(int vaca, int vacb, int vacc) throws RemoteException {
         super();
-        setVacunaA( a );
-        setVacunaB( b );
-        setVacunaC( b );
+        setVacunaA( vaca );
+        setVacunaB( vacb );
+        setVacunaC( vacc );
 
     }
+
+
 
 
     //Cuántas vacunas tiene actualmente la IPS
