@@ -49,9 +49,9 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
         }
     }
 
-    public List<Boolean> pedirVacunas(int vA, int vB, int vC)
+    public List<Integer> pedirVacunas(int vA, int vB, int vC)
     {
-        List <Boolean> vacEntregadas = null;
+        List <Integer> vacEntregadas = null;
         int[] solicitudDeVacunas = {vA,vB,vC};
         IIPS servicio = escogerIPS(solicitudDeVacunas);
         if( servicio != null )

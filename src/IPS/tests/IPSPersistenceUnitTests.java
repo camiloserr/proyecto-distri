@@ -25,7 +25,8 @@ public class IPSPersistenceUnitTests {
             myWriter.write("vac1: 15\n" +
                             "vac2: 15\n" +
                             "vac3: 15\n" +
-                            "min: 6\n");
+                            "min: 6\n" +
+                            "peticion: 30\n");
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -33,7 +34,7 @@ public class IPSPersistenceUnitTests {
         }
 
         //crea el persistence
-        IIPSPersistence persistence = new IPSPersistence("src/IPS/tests/testConfig.txt");
+        IIPSPersistence persistence = new IPSPersistence("src/IPS/tests/testConfig.txt",  "src/IPS/tests/vacunasIps.txt");
         List<Integer> res = persistence.readConfigFile();
 
         // crea el oraculo
@@ -42,6 +43,7 @@ public class IPSPersistenceUnitTests {
         correctAnswer.add(15);
         correctAnswer.add(15);
         correctAnswer.add(6);
+        correctAnswer.add(30);
         assertEquals(res, correctAnswer);
     }
 

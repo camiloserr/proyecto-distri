@@ -7,5 +7,5 @@ import java.util.List;
 public interface IIPS extends Remote {
 
     int[] darVacunaActuales() throws RemoteException;
-    List<Boolean> pedirVacunas(int vA, int vB, int vC ) throws RemoteException;
+    List<Integer> pedirVacunas(int vA, int vB, int vC ) throws RemoteException;
 }

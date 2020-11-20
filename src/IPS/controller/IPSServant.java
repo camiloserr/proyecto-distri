@@ -13,16 +13,14 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     private int vacunaB;
     private int vacunaC;
     private int minVacunas;
+    private int peticion;
     IPSPersistence persistence;
 
     // TODO: leer archivo para inicializar #vacuanas, puerto y nombre de la IPS
 
-    protected IPSServant() throws RemoteException {
-        super();
-        setVacunaA( 10 );
-        setVacunaB( 10 );
-        setVacunaC( 10 );
 
+    public IPSServant() throws RemoteException {
+        super();
     }
 
     public IPSServant(IPSPersistence persistence) throws RemoteException {
@@ -34,21 +32,12 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     private void initVariables() {
 
         List<Integer> values = persistence.readConfigFile();
-        vacunaA = values.get(0);
-        vacunaB = values.get(1);
-        vacunaC = values.get(2);
-        minVacunas = values.get(3);
+        setMinVacunas(values.get(3));
+        setPeticion(values.get(4));
+        setVacunaA(values.get(0));
+        setVacunaB(values.get(1));
+        setVacunaC(values.get(2));
     }
-
-    public IPSServant(int vaca, int vacb, int vacc) throws RemoteException {
-        super();
-        setVacunaA( vaca );
-        setVacunaB( vacb );
-        setVacunaC( vacc );
-
-    }
-
-
 
 
     //Cuántas vacunas tiene actualmente la IPS
@@ -61,36 +50,42 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
     //Hace la petición y actualización de vacunas (No sé si RMI haga los bloqueos necesarios si hay más de una EPS pidiendo)
     //Retorna una lista de las vacunas que entregó exitosamente (por ahora son o todas o ninguna de cada tipo)
-    public List<Boolean> pedirVacunas(int vA, int vB, int vC )
+    public List<Integer> pedirVacunas(int vA, int vB, int vC )
     {
-        boolean darA = false;
-        boolean darB = false;
-        boolean darC = false;
         int cantA = getVacunaA();
         int cantB = getVacunaB();
         int cantC = getVacunaC();
-        List< Boolean > vlist = new ArrayList<>();
+        List< Integer > vlist = new ArrayList<>();
 
         if( cantA - vA >= 0 )
         {
-            darA = true;
+            vlist.add( cantA - vA );
             setVacunaA( cantA - vA );
+        }
+        else {
+            vlist.add(vA - cantA);
+            setVacunaA(0);
         }
         if( cantB - vB >= 0 )
         {
-            darB = true;
+            vlist.add( cantB - vB );
             setVacunaB( cantB - vB );
+        }
+        else{
+            vlist.add(vB - cantB);
+            setVacunaB(0);
         }
         if( cantC - vC >= 0 )
         {
-            darC = true;
+            vlist.add( cantC - vC );
             setVacunaC( cantC  - vC );
         }
+        else{
+            vlist.add(vC - cantC);
+            setVacunaC(0);
+        }
 
-        vlist.add(darA);
-        vlist.add(darB);
-        vlist.add(darC);
-
+        persistence.saveState(getVacunaA(),getVacunaB(),getVacunaC(),getMinVacunas(),getPeticion());
         return  vlist;
 
     }
@@ -102,23 +97,47 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     }
 
     public void setVacunaA(int vacunaA) {
-        this.vacunaA = vacunaA;
+        if( vacunaA >= this.vacunaA )
+            this.vacunaA = vacunaA;
+        else
+            this.vacunaA += peticion;
     }
 
     public int getVacunaB() {
         return vacunaB;
     }
 
-    public void setVacunaB(int vacunaA) {
-        this.vacunaB = vacunaA;
+    public void setVacunaB(int vacunaB) {
+        if( vacunaB >= this.vacunaB )
+            this.vacunaB = vacunaB;
+        else
+            this.vacunaB += peticion;
     }
 
     public int getVacunaC() {
         return vacunaC;
     }
 
-    public void setVacunaC(int vacunaA) {
-        this.vacunaC = vacunaA;
+    public void setVacunaC(int vacunaC) {
+        if( vacunaC>= this.vacunaC )
+            this.vacunaC = vacunaC;
+        else
+            this.vacunaC += peticion;
     }
 
+    public int getMinVacunas() {
+        return minVacunas;
+    }
+
+    public void setMinVacunas(int minVacunas) {
+        this.minVacunas = minVacunas;
+    }
+
+    public int getPeticion() {
+        return peticion;
+    }
+
+    public void setPeticion(int peticion) {
+        this.peticion = peticion;
+    }
 }
