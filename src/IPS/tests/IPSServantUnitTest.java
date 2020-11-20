@@ -19,9 +19,9 @@ public class IPSServantUnitTest {
 
         List<Integer> res = ips.pedirVacunas(5,5,5);
         List<Integer> correctAnswer = new ArrayList<>();
-        correctAnswer.add(10);
-        correctAnswer.add(10);
-        correctAnswer.add(10);
+        correctAnswer.add(0);
+        correctAnswer.add(0);
+        correctAnswer.add(0);
         assertEquals(res, correctAnswer);
 
     }

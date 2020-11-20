@@ -61,12 +61,13 @@ public class IPSPersistence implements IIPSPersistence{
     public void saveState(int vacunaA, int vacunaB, int vacunaC, int minVacunas, int peticion) {
 
         try {
-            FileWriter myWriter = new FileWriter("src/IPS/tests/testConfig.txt");
+            FileWriter myWriter = new FileWriter(stateFileName);
             myWriter.write("vac1: " + vacunaA + "\n" +
                     "vac2: " + vacunaB + "\n" +
                     "vac3: " + vacunaC + "\n" +
                     "min: " + minVacunas + "\n" +
                     "peticion: " + peticion + "\n");
+
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");

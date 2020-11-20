@@ -59,7 +59,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
         if( cantA - vA >= 0 )
         {
-            vlist.add( cantA - vA );
+            vlist.add(0);
             setVacunaA( cantA - vA );
         }
         else {
@@ -68,7 +68,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         }
         if( cantB - vB >= 0 )
         {
-            vlist.add( cantB - vB );
+            vlist.add(0);
             setVacunaB( cantB - vB );
         }
         else{
@@ -77,7 +77,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         }
         if( cantC - vC >= 0 )
         {
-            vlist.add( cantC - vC );
+            vlist.add(0);
             setVacunaC( cantC  - vC );
         }
         else{
