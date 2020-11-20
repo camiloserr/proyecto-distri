@@ -1,15 +1,11 @@
 package GCC.controller;
-
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
-
 import GCC.model.IPSInfo;
 import GCC.persistence.GCCPersistence;
 import GCC.persistence.IGCCPersistence;
 import IPS.controller.IIPS;
-
 import java.rmi.Naming;
 
 public class GCCServant extends UnicastRemoteObject implements IGCC {
@@ -21,9 +17,9 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
     //persistencia
     private IGCCPersistence persistence;
 
-    public GCCServant() throws RemoteException {
+    public GCCServant(GCCPersistence persistence) throws RemoteException {
         super();
-        persistence = new GCCPersistence("src/gcc/persistence/config.txt", "src/gcc/persistence/authentication.txt");
+        this.persistence = persistence;
         initVariables();
     }
 
@@ -53,10 +49,6 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
         }
     }
 
-    public String sayHello(){
-        return "Hello, world!";
-    }
-
     public List<Boolean> pedirVacunas(int vA, int vB, int vC)
     {
         List <Boolean> vacEntregadas = null;
@@ -66,6 +58,8 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
         {
             try
             {
+                // si no se encuentran todas las vacunas, solo se encvian las vacunas encontradas
+                // la EPS debe tener en cuanta las vacunas que no se pudieron entregar para pedirlas de nuevo despues
                 vacEntregadas = servicio.pedirVacunas(vA,vB,vC);
                 System.out.println("Vacunas han sido pedidas");
             }catch (Exception e) {
