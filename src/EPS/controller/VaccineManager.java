@@ -3,7 +3,6 @@ package EPS.controller;
 
 import GCC.controller.IGCC;
 import IPS.controller.IIPS;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.rmi.RemoteException;

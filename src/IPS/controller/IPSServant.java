@@ -1,5 +1,7 @@
 package IPS.controller;
 
+import IPS.persistence.IPSPersistence;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -10,9 +12,11 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     private int vacunaA;
     private int vacunaB;
     private int vacunaC;
-
+    private int minVacunas;
+    IPSPersistence persistence;
 
     // TODO: leer archivo para inicializar #vacuanas, puerto y nombre de la IPS
+
     protected IPSServant() throws RemoteException {
         super();
         setVacunaA( 10 );
@@ -21,6 +25,20 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
     }
 
+    public IPSServant(IPSPersistence persistence) throws RemoteException {
+        super();
+        this.persistence = persistence;
+        initVariables();
+    }
+
+    private void initVariables() {
+
+        List<Integer> values = persistence.readConfigFile();
+        vacunaA = values.get(0);
+        vacunaB = values.get(1);
+        vacunaC = values.get(2);
+        minVacunas = values.get(3);
+    }
 
     public IPSServant(int vaca, int vacb, int vacc) throws RemoteException {
         super();
