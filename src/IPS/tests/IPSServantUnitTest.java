@@ -15,7 +15,7 @@ public class IPSServantUnitTest {
 
     @Test
     public void pedirVacunasSatisfactoriamente() throws RemoteException {
-        IIPS ips = new IPSServant(new IPSPersistence("src/IPS/tests/testConfig.txt","src/IPS/tests/vacunasIps.txt"));
+        IIPS ips = new IPSServant(new IPSPersistence("src/IPS/tests/testConfig.txt","src/IPS/tests/vacunasIps.txt", "src/IPS/tests/ipsData.txt"));
 
         List<Integer> res = ips.pedirVacunas(5,5,5);
         List<Integer> correctAnswer = new ArrayList<>();

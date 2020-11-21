@@ -1,5 +1,7 @@
 package IPS.tests;
 
+
+import IPS.model.IPSData;
 import IPS.persistence.IIPSPersistence;
 import IPS.persistence.IPSPersistence;
 import org.junit.Test;
@@ -34,7 +36,7 @@ public class IPSPersistenceUnitTests {
         }
 
         //crea el persistence
-        IIPSPersistence persistence = new IPSPersistence("src/IPS/tests/testConfig.txt",  "src/IPS/tests/vacunasIps.txt");
+        IIPSPersistence persistence = new IPSPersistence("src/IPS/tests/testConfig.txt","src/IPS/tests/vacunasIps.txt", "src/IPS/tests/ipsData.txt");
         List<Integer> res = persistence.readConfigFile();
 
         // crea el oraculo
@@ -44,6 +46,27 @@ public class IPSPersistenceUnitTests {
         correctAnswer.add(15);
         correctAnswer.add(6);
         correctAnswer.add(30);
+        assertEquals(res, correctAnswer);
+    }
+
+    @Test
+    public void pruebaLecturaIPS()
+    {
+        try {
+            FileWriter myWriter = new FileWriter("src/IPS/tests/ipsData.txt");
+            myWriter.write("IPS\n" +
+                    "port: 8888\n");
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        IIPSPersistence persistence = new IPSPersistence("src/IPS/tests/testConfig.txt","src/IPS/tests/vacunasIps.txt", "src/IPS/tests/ipsData.txt");
+        IPSData res = persistence.readIPSFile();
+
+        IPSData correctAnswer = new IPSData(8888, "IPS");
+
         assertEquals(res, correctAnswer);
     }
 

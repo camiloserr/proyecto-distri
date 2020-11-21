@@ -1,14 +1,22 @@
-package model;
+package IPS.model;
 
 import java.util.List;
-import java.util.Objects;
 
 public class IPSData {
 
     int port;
     String name;
+    String ip;
 
-    public IPSData(int port, String name, List<Integer> vacunas, int minVac) {
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public IPSData(int port, String name) {
         this.port = port;
         this.name = name;
     }

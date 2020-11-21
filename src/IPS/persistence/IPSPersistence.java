@@ -1,6 +1,8 @@
 package IPS.persistence;
 
-import model.IPSData;
+
+
+import IPS.model.IPSData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,15 +16,17 @@ public class IPSPersistence implements IIPSPersistence{
 
     private String configFileName;
     private String stateFileName;
-
+    private String ipsFileName;
     /**
      * inicializa el valor del archivo de configuración
      * @param configFileName
      */
-    public IPSPersistence(String configFileName, String stateFileName)
+    public IPSPersistence(String configFileName, String stateFileName, String ipsFileName)
     {
         this.configFileName = configFileName;
         this.stateFileName = stateFileName;
+        this.ipsFileName = ipsFileName;
+
     }
 
     @Override
@@ -58,6 +62,38 @@ public class IPSPersistence implements IIPSPersistence{
         return initialConfig;
     }
 
+    @Override
+    public IPSData readIPSFile() {
+        IPSData ips = new IPSData();
+
+        Scanner fileReader = null;
+
+        try {
+            File ipsFile = new File(ipsFileName);
+            fileReader = new Scanner(ipsFile);
+
+
+            String data = fileReader.nextLine();
+            data.trim();
+            ips.setName(data);
+            data = fileReader.nextLine();
+            data.trim();
+            String[] arrOfStr2 = data.split(":", 2);
+            ips.setPort( Integer.parseInt(arrOfStr2[1].trim()) );
+            fileReader.close();
+
+
+        }catch (FileNotFoundException e)
+        {
+            System.out.println("Archivo no encontrado");
+            e.printStackTrace();
+
+        }
+
+        return ips;
+    }
+
+    @Override
     public void saveState(int vacunaA, int vacunaB, int vacunaC, int minVacunas, int peticion) {
 
         try {
