@@ -15,11 +15,7 @@ public class GCCPersistence implements IGCCPersistence{
     private String authenticationFileName;
 
 
-    /**
-     * inicializa los nombres de los archivos necesarios
-     * @param configFileName
-     * @param authenticationFileName
-     */
+
     public GCCPersistence(String configFileName, String authenticationFileName) {
         this.configFileName = configFileName;
         this.authenticationFileName = authenticationFileName;
@@ -77,12 +73,7 @@ public class GCCPersistence implements IGCCPersistence{
         return res;
     }
 
-    /**
-     * lee el archivo para autenticar un usuario
-     * @param username nombre de usuario
-     * @param passHash hash de la contraseña enviada por el usuario
-     * @return true si las credenciales coinciden, false de lo contrario
-     */
+
     @Override
     public boolean authenticateUser(String username, String passHash) {
         File myObj = new File(authenticationFileName);
