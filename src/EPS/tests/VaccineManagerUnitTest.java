@@ -33,6 +33,16 @@ public class VaccineManagerUnitTest {
 
                 return res;
             }
+
+            @Override
+            public boolean login(String user, String password) {
+                return false;
+            }
+
+            @Override
+            public boolean register(String user, String password) {
+                return false;
+            }
         });
 
         try {
@@ -51,6 +61,16 @@ public class VaccineManagerUnitTest {
             @Override
             public List<Integer> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
                 return null;
+            }
+
+            @Override
+            public boolean login(String user, String password) {
+                return false;
+            }
+
+            @Override
+            public boolean register(String user, String password) {
+                return false;
             }
         });
 
@@ -79,6 +99,16 @@ public class VaccineManagerUnitTest {
             @Override
             public List<Integer> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
                 return null;
+            }
+
+            @Override
+            public boolean login(String user, String password) {
+                return false;
+            }
+
+            @Override
+            public boolean register(String user, String password) {
+                return false;
             }
         });
 

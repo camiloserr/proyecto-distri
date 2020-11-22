@@ -13,6 +13,7 @@ public class EPSClient {
         //TODO: usar VaccineManager para pedir las vacunas
         try {
             IGCC servicio = (IGCC) Naming.lookup("rmi://localhost:9999/GCC");
+
             List <Integer> vacRecib = servicio.pedirVacunas(2,2,2);
             System.out.println( "response: " + vacRecib.toString() );
 
