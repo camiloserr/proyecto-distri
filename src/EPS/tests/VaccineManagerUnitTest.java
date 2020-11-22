@@ -18,20 +18,30 @@ public class VaccineManagerUnitTest {
     @Test
     public void makeOrderSuccesfully(){
 
-        List<Boolean> res = new ArrayList<Boolean>();
+        List<Integer> res = new ArrayList<>();
 
-        res.add(true);
-        res.add(false);
-        res.add(true);
+        res.add(0);
+        res.add(0);
+        res.add(0);
 
 
         // creates a VaccineManager with a mock IGCC
         VaccineManager vm = new VaccineManager(new IGCC() {
             @Override
-            public List<Boolean> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
+            public List<Integer> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
 
 
                 return res;
+            }
+
+            @Override
+            public boolean login(String user, String password) {
+                return false;
+            }
+
+            @Override
+            public boolean register(String user, String password) {
+                return false;
             }
         });
 
@@ -49,8 +59,18 @@ public class VaccineManagerUnitTest {
 
         VaccineManager vm = new VaccineManager(new IGCC() {
             @Override
-            public List<Boolean> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
+            public List<Integer> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
                 return null;
+            }
+
+            @Override
+            public boolean login(String user, String password) {
+                return false;
+            }
+
+            @Override
+            public boolean register(String user, String password) {
+                return false;
             }
         });
 
@@ -77,8 +97,18 @@ public class VaccineManagerUnitTest {
     public void addVaccineIllegalArgument(){
         VaccineManager vm = new VaccineManager(new IGCC() {
             @Override
-            public List<Boolean> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
+            public List<Integer> pedirVacunas(int vA, int vB, int vC) throws RemoteException {
                 return null;
+            }
+
+            @Override
+            public boolean login(String user, String password) {
+                return false;
+            }
+
+            @Override
+            public boolean register(String user, String password) {
+                return false;
             }
         });
 

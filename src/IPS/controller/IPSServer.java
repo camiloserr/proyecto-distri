@@ -1,6 +1,8 @@
 package IPS.controller;
 
 import IPS.controller.IPSServant;
+import IPS.model.IPSData;
+import IPS.persistence.IPSPersistence;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -10,22 +12,14 @@ public class IPSServer {
 
     public static void main(String[] args) throws RemoteException {
 
-        // leer archivo
-        //parametros
-        //puerto
-        //nombre de la ips
-        //numero de vacuna
+        //int port = 8888;
+        //String nombre = "IPS";
+        IPSPersistence persistence = new IPSPersistence("src/IPS/tests/testConfig.txt","src/IPS/tests/vacunasIps.txt", "src/IPS/tests/ipsData.txt");
 
-        // TODO: leer del archivo
-        int port = 8888;
-        String nombre = "IPS";
-        int vaca = 10;
-        int vacb = 10;
-        int vacc = 10;
+        IPSData ips = persistence.readIPSFile();
 
-
-        Registry registry = LocateRegistry.createRegistry(port);
-        registry.rebind(nombre, new IPSServant(vaca, vacb, vacc));
+        Registry registry = LocateRegistry.createRegistry(ips.getPort());
+        registry.rebind(ips.getName(), new IPSServant(persistence));
 
 
     }

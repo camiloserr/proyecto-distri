@@ -3,7 +3,6 @@ package EPS.controller;
 
 import GCC.controller.IGCC;
 import IPS.controller.IIPS;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.rmi.RemoteException;
@@ -51,12 +50,12 @@ public class VaccineManager {
      * @return arreglo con las vacunas que le llegaron
      */
     //TODO: esto deberian ser ints, no booleans
-    public List<Boolean> makeOrder() throws RemoteException {
-        List<Boolean> vacRecib = gcc.pedirVacunas(currentOrder[0], currentOrder[1], currentOrder[2]);
+    public List<Integer> makeOrder() throws RemoteException {
+        List<Integer> vacRecib = gcc.pedirVacunas(currentOrder[0], currentOrder[1], currentOrder[2]);
         // como el gcc tal vaz no responde con todas las vacunas, las vacunas que no fueron recibidas se mantienen
         // en la orden para ser pedidas en la proxima orden
         for(int i = 0 ; i<vacRecib.size() ; ++i){
-            if(vacRecib.get(i) == true){
+            if(vacRecib.get(i) == 0){
                 currentOrder[i] = 0;
             }
         }

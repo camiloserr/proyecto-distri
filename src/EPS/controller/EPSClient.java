@@ -13,13 +13,14 @@ public class EPSClient {
         //TODO: usar VaccineManager para pedir las vacunas
         try {
             IGCC servicio = (IGCC) Naming.lookup("rmi://localhost:9999/GCC");
-            List <Boolean> vacRecib = servicio.pedirVacunas(2,2,2);
+
+            List <Integer> vacRecib = servicio.pedirVacunas(2,2,2);
             System.out.println( "response: " + vacRecib.toString() );
 
-            List <Boolean> vacRecib2 = servicio.pedirVacunas(2,2,2);
+            List <Integer> vacRecib2 = servicio.pedirVacunas(2,2,2);
             System.out.println( "response: " + vacRecib2.toString() );
 
-            List <Boolean> vacRecib3 = servicio.pedirVacunas(2,2,2);
+            List <Integer> vacRecib3 = servicio.pedirVacunas(2,2,2);
             System.out.println( "response: " + vacRecib3.toString() );
 
         } catch (Exception e) {
