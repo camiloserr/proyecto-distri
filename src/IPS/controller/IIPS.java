@@ -13,13 +13,16 @@ public interface IIPS extends Remote {
     int[] darVacunaActuales() throws RemoteException;
 
     /**
-     * esta función realiza la petición de vacunas a la eps, recive el parámetro para cada vacuna
-     * y retorna un lista de la cantidad de vacunas que faltaron por entregar.
-     * @param vA
-     * @param vB
-     * @param vC
+     * esta función realiza la petición de vacunas a la eps, recive un arreglo de enteros con la petición de cada vacuna
+     * y otro arreglo con el estado de la ips en la lectura
+     *
+     * Si el estado de la lectura no coincide con el estado de la petición, se aborta la transacción,
+     * de lo contrario retorna un lista de la cantidad de vacunas que faltaron por entregar.
+     *
+     * @param peticion
+     * @param estado
      * @return
      * @throws RemoteException
      */
-    List<Integer> pedirVacunas(int vA, int vB, int vC ) throws RemoteException;
+    List<Integer> pedirVacunas(int[] peticion, int[] estado ) throws RemoteException;
 }

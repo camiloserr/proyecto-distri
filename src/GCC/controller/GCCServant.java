@@ -60,7 +60,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
             {
                 // si no se encuentran todas las vacunas, solo se encvian las vacunas encontradas
                 // la EPS debe tener en cuanta las vacunas que no se pudieron entregar para pedirlas de nuevo despues
-                vacEntregadas = servicio.pedirVacunas(vA,vB,vC);
+                vacEntregadas = servicio.pedirVacunas(new int[]{vA,vB,vC}, servicio.darVacunaActuales());
                 System.out.println("Vacunas han sido pedidas");
             }catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
