@@ -1,5 +1,7 @@
 package EPS.views;
 
+import EPS.controller.EPSClient;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
@@ -31,6 +33,8 @@ public class LandingGUI {
         infoMS.setBounds(70, 51, 320, 15);
         contentPane.add(infoMS);
 
+        EPSClient epsClient = new EPSClient();
+
         JButton logInBtn = new JButton("Ingresar");
         logInBtn.setBounds(153, 99, 117, 25);
         logInBtn.addActionListener(new ActionListener() {
@@ -38,7 +42,7 @@ public class LandingGUI {
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.setVisible(false);
                 try{
-                    LogInGUI newLogInFrame = new LogInGUI();
+                    LogInGUI newLogInFrame = new LogInGUI(epsClient);
                     newLogInFrame.setVisible(true);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -55,8 +59,7 @@ public class LandingGUI {
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.setVisible(false);
                 try{
-
-                    SignUpGUI newSignUpFrame = new SignUpGUI();
+                    SignUpGUI newSignUpFrame = new SignUpGUI(epsClient);
                     newSignUpFrame.setVisible(true);
                 }catch (Exception e){
                     e.printStackTrace();

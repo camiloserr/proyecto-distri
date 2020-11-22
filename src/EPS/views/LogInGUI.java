@@ -14,7 +14,7 @@ public class LogInGUI {
     /**
      * Create the frame.
      */
-    public LogInGUI() {
+    public LogInGUI(EPSClient epsClient) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(100, 100, 300, 200);
@@ -46,9 +46,21 @@ public class LogInGUI {
         logInBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                EPSClient epsClient = new EPSClient();
-                //epsClient
-                frame.setVisible(false);
+                boolean response = epsClient.authLogIn(userField.getText(), passwField.getText());
+                if(response){
+                    frame.setVisible(false);
+                    try{
+                        EPSInfoGUI epsInfoGUI = new EPSInfoGUI(epsClient, userField.getText());
+                        epsInfoGUI.setVisible(true);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Ocurrió un problema. Intente de nuevo");
+                    userField.setText("");
+                    passwField.setText("");
+                }
             }
         });
 

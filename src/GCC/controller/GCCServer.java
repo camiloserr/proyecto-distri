@@ -12,7 +12,7 @@ public class GCCServer {
 
         //publico mi servicio
         Registry registry = LocateRegistry.createRegistry(9999);
-        registry.rebind("GCC", new GCCServant(new GCCPersistence("src/gcc/persistence/config.txt", "src/gcc/persistence/authentication.txt")));
+        registry.rebind("GCC", new GCCServant(new GCCPersistence("src/GCC/persistence/config.txt", "src/gcc/persistence/authentication.txt")));
 
     }
 }

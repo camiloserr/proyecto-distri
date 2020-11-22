@@ -24,6 +24,8 @@ public class Main {
             public void run() {
                 try {
                     LandingGUI window = new LandingGUI();
+                    //EPSClient epsClient = new EPSClient();
+                    //EPSInfoGUI window = new EPSInfoGUI(epsClient, "coomeva");
                     window.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

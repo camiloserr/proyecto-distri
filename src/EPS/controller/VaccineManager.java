@@ -60,4 +60,9 @@ public class VaccineManager {
         return vacRecib;
     }
 
+    public void resetOrder() throws RemoteException{
+        int[] reseted = {0, 0, 0};
+        currentOrder = reseted;
+    }
+
 }
