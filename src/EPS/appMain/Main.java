@@ -6,7 +6,7 @@
 package EPS.appMain;
 
 import EPS.controller.EPSClient;
-import EPS.views.LogInGUI;
+import EPS.views.*;
 
 import java.awt.*;
 
@@ -23,9 +23,8 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    //LandingGUI window = new LandingGUI();
-                    LogInGUI window = new LogInGUI();
-                    window.setVisible();
+                    LandingGUI window = new LandingGUI();
+                    window.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,7 +1,10 @@
 package EPS.views;
 
+import EPS.controller.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LogInGUI {
 
@@ -40,10 +43,18 @@ public class LogInGUI {
         JButton logInBtn = new JButton("Ingresar");
         logInBtn.setBounds(100, 120, 117, 25);
         contentPane.add(logInBtn);
+        logInBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                EPSClient epsClient = new EPSClient();
+                //epsClient
+                frame.setVisible(false);
+            }
+        });
 
     }
 
-    public void setVisible(){
-        frame.setVisible(true);
+    public void setVisible(boolean value){
+        frame.setVisible(value);
     }
 }

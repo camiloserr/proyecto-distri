@@ -42,7 +42,7 @@ public class SignUpGUI {
         contentPane.add(logInBtn);
     }
 
-    public void setVisible(){
-        frame.setVisible(true);
+    public void setVisible(boolean value){
+        frame.setVisible(value);
     }
 }

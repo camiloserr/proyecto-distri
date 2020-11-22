@@ -2,6 +2,8 @@ package EPS.views;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LandingGUI {
 
@@ -31,15 +33,40 @@ public class LandingGUI {
 
         JButton logInBtn = new JButton("Ingresar");
         logInBtn.setBounds(153, 99, 117, 25);
+        logInBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.setVisible(false);
+                try{
+                    LogInGUI newLogInFrame = new LogInGUI();
+                    newLogInFrame.setVisible(true);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
         contentPane.add(logInBtn);
 
         JButton signUpBtn = new JButton("Regitsrarse");
         signUpBtn.setBounds(153, 163, 117, 25);
         contentPane.add(signUpBtn);
+        signUpBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.setVisible(false);
+                try{
+
+                    SignUpGUI newSignUpFrame = new SignUpGUI();
+                    newSignUpFrame.setVisible(true);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    public void setVisible(){
-        frame.setVisible(true);
+    public void setVisible(boolean value){
+        frame.setVisible(value);
     }
 
 }
