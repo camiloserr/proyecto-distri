@@ -6,6 +6,9 @@
 package EPS.appMain;
 
 import EPS.controller.EPSClient;
+import EPS.views.LogInGUI;
+
+import java.awt.*;
 
 public class Main {
     public Main() {
@@ -17,10 +20,16 @@ public class Main {
     }
 
     public static void deployMainView(EPSClient epsClient) {
-        //JFrame frame = new JFrame("EPSStateGUI");
-        //frame.setContentPane((new EPSStateGUI("EPS #1", epsClient)).getMainPanel());
-        //frame.setDefaultCloseOperation(3);
-        //frame.pack();
-        //frame.setVisible(true);
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    //LandingGUI window = new LandingGUI();
+                    LogInGUI window = new LogInGUI();
+                    window.setVisible();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
