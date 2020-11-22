@@ -5,7 +5,9 @@ import IPS.persistence.IPSPersistence;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class IPSServant extends UnicastRemoteObject implements IIPS {
 
@@ -14,7 +16,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     private int vacunaC;
     private int minVacunas;
     private int peticion;
-    IPSPersistence persistence;
+    private IPSPersistence persistence;
 
     // TODO: leer archivo para inicializar #vacuanas, puerto y nombre de la IPS
 
@@ -50,11 +52,17 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
 
     //Hace la petición y actualización de vacunas (No sé si RMI haga los bloqueos necesarios si hay más de una EPS pidiendo)
     //Retorna una lista de las vacunas que entregó exitosamente (por ahora son o todas o ninguna de cada tipo)
-    public List<Integer> pedirVacunas(int vA, int vB, int vC )
+    public List<Integer> pedirVacunas(int[] peticion, int[] estado )
     {
+
+        if( !Arrays.equals(this.darVacunaActuales(), estado) )
+            return null;
         int cantA = getVacunaA();
         int cantB = getVacunaB();
         int cantC = getVacunaC();
+        int vA = peticion[0];
+        int vB = peticion[1];
+        int vC = peticion[2];
         List< Integer > vlist = new ArrayList<>();
 
         if( cantA - vA >= 0 )

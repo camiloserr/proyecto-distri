@@ -7,6 +7,7 @@ import GCC.persistence.GCCPersistence;
 import GCC.persistence.IGCCPersistence;
 import IPS.controller.IIPS;
 import java.rmi.Naming;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GCCServant extends UnicastRemoteObject implements IGCC {
 
@@ -60,7 +61,15 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
             {
                 // si no se encuentran todas las vacunas, solo se encvian las vacunas encontradas
                 // la EPS debe tener en cuanta las vacunas que no se pudieron entregar para pedirlas de nuevo despues
-                vacEntregadas = servicio.pedirVacunas(vA,vB,vC);
+                vacEntregadas = servicio.pedirVacunas(new int[]{vA,vB,vC}, servicio.darVacunaActuales());
+
+                // la transaccion fue cancelada porque el estado no era igual a cuando se leyo
+                if(vacEntregadas == null){
+                    System.out.println("transaccion cancelada: estado no concistente");
+                    // retorna la peticion porque no pudo devolver ninguna vacuna
+                    return null;
+
+                }
                 System.out.println("Vacunas han sido pedidas");
             }catch (Exception e) {
                 System.err.println("Client exception: " + e.toString());
@@ -72,9 +81,19 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
     }
 
+    @Override
+    public boolean login(String user, String password) {
+        return persistence.authenticateUser(user, password);
+    }
+
+    @Override
+    public boolean register(String user, String password) {
+        return persistence.newUser(user, password);
+    }
+
 
     private IIPS escogerIPS(int[] vac){
-        TreeMap<Integer, IIPS> serviciosQuePuedenResponder = new TreeMap<Integer, IIPS>(Collections.reverseOrder());
+        ArrayList< IIPS > serviciosQuePuedenResponder = new ArrayList<>();
         for(int i = 0 ; i < services.size() ; ++i){
             IIPS ips = services.get(i);
             int[] diffs = {-1,-1,-1};
@@ -97,7 +116,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
                      }
                 }
 
-                serviciosQuePuedenResponder.put(vacunasDisponibles, ips);
+                serviciosQuePuedenResponder.add( ips );
 
             }
             catch(RemoteException e){
@@ -106,8 +125,8 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
             }
         }
 
-        //TODO: ponerle el random porque ahi esta retornando la IIPS que le sobran mas vacunas
-        return serviciosQuePuedenResponder.get(serviciosQuePuedenResponder.lastKey());
+
+        return serviciosQuePuedenResponder.get(new Random().nextInt( serviciosQuePuedenResponder.size()));
     }
 
 
