@@ -2,11 +2,10 @@ package GCC.persistence;
 
 import GCC.model.IPSInfo;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class GCCPersistence implements IGCCPersistence{
@@ -73,9 +72,10 @@ public class GCCPersistence implements IGCCPersistence{
         return res;
     }
 
-
     @Override
-    public boolean authenticateUser(String username, String passHash) {
+    public Map<String, String> getUsers() {
+
+        Map<String, String> usuarios = new HashMap<>();
         File myObj = new File(authenticationFileName);
         Scanner myReader = null;
         try {
@@ -87,14 +87,9 @@ public class GCCPersistence implements IGCCPersistence{
                 String user = arrOfStr[0];
                 String pass = arrOfStr[1];
 
-                if(user.equals(username)){
-                    if(pass.equals(passHash)){
-                        return true;
-                    }
-                    else{
-                        return false;
-                    }
-                }
+                usuarios.put(user, pass);
+
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -102,22 +97,20 @@ public class GCCPersistence implements IGCCPersistence{
         finally {
             myReader.close();
         }
-        return false;
+        return usuarios;
     }
+
 
 
     @Override
     public boolean newUser(String username, String passHash) {
 
-        if(existsUser(username)){
-            System.out.println("Usuario "+username+" ya existe");
-            return false;
-        }
         try {
-            System.out.println("Usuario " + username + " ingresado");
-            FileWriter myWriter = new FileWriter(authenticationFileName);
-            myWriter.append(username+":"+passHash+"\n");
-            myWriter.close();
+            //System.out.println("Usuario " + username + " ingresado");
+            Writer output = new BufferedWriter(new FileWriter(authenticationFileName, true));
+
+            output.append(username+":"+passHash+"\n");
+            output.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

@@ -17,11 +17,14 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
     private List<IPSInfo> activeServices;
     //persistencia
     private IGCCPersistence persistence;
+    //mapa con los usuarios
+    private Map<String, String> usuarios;
 
     public GCCServant(GCCPersistence persistence) throws RemoteException {
         super();
         this.persistence = persistence;
         initVariables();
+        usuarios = null;
     }
 
     /**
@@ -82,12 +85,25 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
     }
 
     @Override
-    public boolean login(String user, String password) {
-        return persistence.authenticateUser(user, password);
+    public boolean login(String user, String password) throws RemoteException {
+        if(usuarios == null){
+            usuarios = persistence.getUsers();
+        }
+
+        return usuarios.containsKey(user);
     }
+
 
     @Override
     public boolean register(String user, String password) {
+        if(usuarios == null){
+            usuarios = persistence.getUsers();
+        }
+        if(usuarios.containsKey(user)){
+            System.out.println("Usuario "+user+" ya existe");
+            return false;
+        }
+        usuarios.put(user, password);
         return persistence.newUser(user, password);
     }
 
@@ -104,9 +120,9 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
                 // pide las vacunas actuales a la IPS
                 int[] vacunasActuales = ips.darVacunaActuales();
-                System.out.println("La IPS "+activeServices.get(i).getName()+" tiene " +
+                /*System.out.println("La IPS "+activeServices.get(i).getName()+" tiene " +
                         vacunasActuales[0] + " de A, " + vacunasActuales[1] + " de B y " +
-                        vacunasActuales[2] + " de C");
+                        vacunasActuales[2] + " de C");*/
 
 
                 for(int j = 0 ; j<3 ; j++){
