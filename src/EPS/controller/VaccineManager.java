@@ -2,8 +2,6 @@ package EPS.controller;
 
 
 import GCC.controller.IGCC;
-import IPS.controller.IIPS;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -49,7 +47,6 @@ public class VaccineManager {
      * pide las vacunas que tiene actualmente en la lista a el GCC
      * @return arreglo con las vacunas que le llegaron
      */
-    //TODO: esto deberian ser ints, no booleans
     public List<Integer> makeOrder() throws RemoteException {
         List<Integer> vacRecib = gcc.pedirVacunas(currentOrder[0], currentOrder[1], currentOrder[2]);
         // como el gcc tal vaz no responde con todas las vacunas, las vacunas que no fueron recibidas se mantienen
@@ -61,6 +58,11 @@ public class VaccineManager {
         }
 
         return vacRecib;
+    }
+
+    public void resetOrder() throws RemoteException{
+        int[] reseted = {0, 0, 0};
+        currentOrder = reseted;
     }
 
 }
