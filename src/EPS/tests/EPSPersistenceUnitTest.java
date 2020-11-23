@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class EPSPersistenceUnitTest {
 
+    //Prueba que la unidad de persistencia escriba correctamente el nuevo archivo
     @Test
     public void writeFileCorrectly(){
         EPSPersistence epsPersistence = new EPSPersistence();
@@ -26,6 +27,7 @@ public class EPSPersistenceUnitTest {
         }
     }
 
+    //Prueba que la unidad de persistencia realiza la lectura de archivos correctamente
     @Test
     public void readFileCorrectly(){
         boolean first = true;

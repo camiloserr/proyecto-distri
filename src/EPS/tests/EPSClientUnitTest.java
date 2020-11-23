@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class EPSClientUnitTest {
 
+    //Prueba que la EPS esté en capacidad de hacer un ingreso exitoso
     @Test
     public void makeLogInSuccesfully(){
         EPSClient epsClient = new EPSClient();
@@ -19,6 +20,7 @@ public class EPSClientUnitTest {
         }
     }
 
+    //Prueba que la EPS esté en capacidad de registrarse exitosamente
     @Test
     public void makeSignUpSuccesfully(){
         EPSClient epsClient = new EPSClient();
@@ -29,6 +31,7 @@ public class EPSClientUnitTest {
         }
     }
 
+    //Prueba que la EPS esté en capacidad de hacer una solicitud exitosamente
     @Test
     public void makeOrderSuccesfully(){
         EPSClient epsClient = new EPSClient();

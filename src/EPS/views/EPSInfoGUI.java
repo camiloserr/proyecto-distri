@@ -36,7 +36,7 @@ public class EPSInfoGUI {
         contentPane.add(nameLabel);
 
         JButton refreshBtn = new JButton("Refresh");
-        refreshBtn.setBounds(300, 5, 80, 10);
+        refreshBtn.setBounds(300, 5, 120, 13);
         contentPane.add(refreshBtn);
 
         JTabbedPane optionPane = new JTabbedPane(JTabbedPane.TOP);
@@ -80,6 +80,10 @@ public class EPSInfoGUI {
         });
     }
 
+    /**
+     * Despliega o cierra la ventana
+     * @param value
+     */
     public void setVisible(boolean value){
         frame.setVisible(value);
     }

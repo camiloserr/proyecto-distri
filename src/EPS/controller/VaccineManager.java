@@ -60,6 +60,10 @@ public class VaccineManager {
         return vacRecib;
     }
 
+    /**
+     * En caso de que la solicitud de vacunas no haya sido exitosa, se regresa la orden a su esquema básico
+     * @throws RemoteException
+     */
     public void resetOrder() throws RemoteException{
         int[] reseted = {0, 0, 0};
         currentOrder = reseted;
