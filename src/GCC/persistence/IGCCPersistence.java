@@ -3,6 +3,7 @@ package GCC.persistence;
 import GCC.model.IPSInfo;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface IGCCPersistence {
 
@@ -14,12 +15,10 @@ public interface IGCCPersistence {
     ArrayList<IPSInfo> readConfigFile();
 
     /**
-     * lee archivo de autenticacion
-     * @param username nombre de usuario
-     * @param passHash hash de la contraseña enviada por el usuario
-     * @return true si las credenciales corresponden con el archivo
+     * lee archivo de autenticacion y retorna todos los usuarios del sistema
+     * @return Mapa con los usuarios del archivo de autenticacion
      */
-    boolean authenticateUser(String username, String passHash);
+    Map<String, String> getUsers();
 
     /**
      * recibe las credenciales y las escribe en el archivo de autenticacion
