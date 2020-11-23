@@ -10,7 +10,7 @@ import EPS.persistence.EPSPersistence;
 import EPS.persistence.IEPSPersistence;
 import GCC.controller.IGCC;
 
-import java.nio.charset.StandardCharsets;
+import java.math.BigInteger;
 import java.rmi.Naming;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -22,6 +22,9 @@ public class EPSClient {
     private IGCC servicio;
     private IEPSPersistence persistence = new EPSPersistence();
 
+    /**
+     * Inicializa la EPS. Se conecta a la interfaz del GCC (IGCC). Inicializa el gestor de vacunas
+     */
     public EPSClient() {
         try {
             this.servicio = (IGCC) Naming.lookup("rmi://localhost:9999/GCC");
@@ -33,6 +36,10 @@ public class EPSClient {
 
     }
 
+    /**
+     * Getter de la lista de usuarios
+     * @return
+     */
     public List<UserInfo> getUsers() {
         return this.users;
     }
@@ -54,6 +61,10 @@ public class EPSClient {
         }
     }
 
+    /**
+     * Devuelve una cadena con la información de los usuarios.
+     * @return cadena con la información (ID, NOMBRE, APELLIDO, ESTADO DE SOLICITUD, VACUNA SOLICITADA) de los usuarios
+     */
     public String getUsrStr(){
         String usersStr = "";
         for(UserInfo auxUser : users){
@@ -64,7 +75,12 @@ public class EPSClient {
         return usersStr;
     }
 
-    public void makeOrder(){
+    /**
+     * Hace la orden de las vacunas pendientes en caso de que se necesiten más de 10 vacunas. Modifica el estado de los
+     * usuarios que hayan recibido la vacuna. En caso de no ser una transacción finalizada, se aborta.
+     * @return Devuelve true en caso de haber completado la transacción
+     */
+    public boolean makeOrder(){
         int[] prepareOrder = {0, 0, 0};
         int pedingAmount = 0;
         for(UserInfo auxUser : users){
@@ -93,8 +109,13 @@ public class EPSClient {
                 e.printStackTrace();
             }
         }
+        return true;
     }
 
+    /**
+     * Cambia el estado de petición de vacunas de "Pendiente" a "Recibida".
+     * @param receivedVacs indica la vacunas recibidas
+     */
     public void changeUsrState(List<Integer>receivedVacs){
         int[] requested = {0, 0, 0};
         for(UserInfo auxUser : users){
@@ -113,11 +134,15 @@ public class EPSClient {
         persistence.setUserInfo(users);
     }
 
+    /**
+     * Devuelve una cadena con la información de los usuarios que han recibido la vacuna
+     * @return una cadena indicando la información de los usuarios que han recibido la vacuna solicitada
+     */
     public String showTransactions(){
         String transactions = "";
         for(UserInfo auxUser : users){
             if(auxUser.getState().equals("Recibida")){
-                transactions += "ID: " + auxUser.getState() + " ";
+                transactions += "ID: " + auxUser.getUniqueId() + " ";
                 transactions += auxUser.getName() + " " + auxUser.getLastName() + " ";
                 transactions += "Vacuna de tipo: " + auxUser.getVaccineRequested() + " " + auxUser.getState() + '\n';
             }
@@ -125,6 +150,12 @@ public class EPSClient {
         return transactions;
     }
 
+    /**
+     * Se encarga de hacer el log in en la cuenta especficada
+     * @param user nombre de usuario con el que se realizó el registro
+     * @param password contraseña con la que se realizó el registro
+     * @return "true" en caso de ingreso exitoso y "false" en caso de ingreso no exitoso
+     */
     public boolean authLogIn(String user, String password){
         boolean response = false;
         try{
@@ -135,6 +166,12 @@ public class EPSClient {
         return response;
     }
 
+    /**
+     * Se encarga de registrar a un nuevo usuario
+     * @param user nombre de usuario con el que se desea hacer el registro
+     * @param password contraseña con la que se desea hacer el registro
+     * @return "true" en caso de registro exitoso y "false" en caso de registro no exitoso
+     */
     public boolean authSignUp(String user, String password){
         boolean response = false;
         try{
@@ -146,15 +183,21 @@ public class EPSClient {
         return response;
     }
 
+    /**
+     * Dada una palabra, se extrae su respectivo hash a partir del algoritmo SHA-256
+     * @param word palabra a convertir en un hash
+     * @return se devuelve el hash obtenido como una cadena
+     */
     public String getStrHash(String word){
-        byte[] encodedHash = null;
+        String encodedHash = "";
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            encodedHash = digest.digest(
-                    word.getBytes(StandardCharsets.UTF_8));
+            digest.reset();
+            digest.update(word.getBytes("utf8"));
+            encodedHash = String.format("%040x", new BigInteger(1, digest.digest()));
         }catch (Exception e){
             e.printStackTrace();
         }
-        return encodedHash.toString();
+        return encodedHash;
     }
 }

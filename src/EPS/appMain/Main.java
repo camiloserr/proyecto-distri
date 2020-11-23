@@ -14,11 +14,19 @@ public class Main {
     public Main() {
     }
 
+    /**
+     * Inicializa el objeto de tipo EPS y llama el método encargado de lanzar la vista de aterrizaje "landing"
+     * @param args
+     */
     public static void main(String[] args) {
         EPSClient epsClient = new EPSClient();
         deployMainView(epsClient);
     }
 
+    /**
+     * Despliega la vista de aterrizaje "landing"
+     * @param epsClient
+     */
     public static void deployMainView(EPSClient epsClient) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {

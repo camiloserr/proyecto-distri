@@ -68,6 +68,10 @@ public class LandingGUI {
         });
     }
 
+    /**
+     * Despliega o cierra la ventana
+     * @param value
+     */
     public void setVisible(boolean value){
         frame.setVisible(value);
     }
