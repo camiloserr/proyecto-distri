@@ -34,7 +34,7 @@ public class EPSPersistence implements IEPSPersistence {
     }
 
     public void setUserInfo(List<UserInfo> newUsers){
-        String path = "src/EPS/persitence/" + fileName + ".txt";
+        String path = "src/EPS/persistence/" + fileName + ".txt";
         try {
             File file = new File(path);
             BufferedWriter wr = new BufferedWriter(new FileWriter(file, false));
@@ -45,9 +45,8 @@ public class EPSPersistence implements IEPSPersistence {
                 newFile += auxUser.getName() + " ";
                 newFile += auxUser.getLastName() + " ";
                 newFile += auxUser.getState() + " ";
-                newFile += auxUser.getVaccineRequested() + '\n';
+                newFile += auxUser.getVaccineRequested() + "\n";
             }
-
             wr.write(newFile);
             wr.close();
         } catch (Exception e) {

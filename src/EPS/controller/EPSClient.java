@@ -10,7 +10,9 @@ import EPS.persistence.EPSPersistence;
 import EPS.persistence.IEPSPersistence;
 import GCC.controller.IGCC;
 
+import java.nio.charset.StandardCharsets;
 import java.rmi.Naming;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class EPSClient {
     public void getUsrList(String name){
         persistence.setFileName(name);
         try {
-            setUsers(persistence.readUsrFromFile());
+            users = persistence.readUsrFromFile();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -66,20 +68,19 @@ public class EPSClient {
         int[] prepareOrder = {0, 0, 0};
         int pedingAmount = 0;
         for(UserInfo auxUser : users){
-            if(auxUser.getState() == "Pendiente"){
+            if(auxUser.getState().equals("Pendiente")){
                 pedingAmount += 1;
             }
         }
         if(9 < pedingAmount){
             for(UserInfo auxUser : users){
-                if(auxUser.getState() != "Recibida"){
+                if(!auxUser.getState().equals("Recibida")){
                     prepareOrder[auxUser.getVaccineRequested()] += 1;
                 }
             }
             vaccineManager.addVaccine(prepareOrder[0], 0);
             vaccineManager.addVaccine(prepareOrder[1], 1);
             vaccineManager.addVaccine(prepareOrder[2], 2);
-
             try{
                 List<Integer> response = vaccineManager.makeOrder();
                 if(response != null){
@@ -115,7 +116,7 @@ public class EPSClient {
     public String showTransactions(){
         String transactions = "";
         for(UserInfo auxUser : users){
-            if(auxUser.getState() == "Recibida"){
+            if(auxUser.getState().equals("Recibida")){
                 transactions += "ID: " + auxUser.getState() + " ";
                 transactions += auxUser.getName() + " " + auxUser.getLastName() + " ";
                 transactions += "Vacuna de tipo: " + auxUser.getVaccineRequested() + " " + auxUser.getState() + '\n';
@@ -125,18 +126,35 @@ public class EPSClient {
     }
 
     public boolean authLogIn(String user, String password){
-        return servicio.login(user, getStrHash(password));
+        boolean response = false;
+        try{
+            response = servicio.login(user, getStrHash(password));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public boolean authSignUp(String user, String password){
-        return servicio.register(user, getStrHash(password));
+        boolean response = false;
+        try{
+            response = servicio.register(user, getStrHash(password));
+            return response;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public String getStrHash(String word){
-        int hash = 7;
-        for(int i = 0 ; i < word.length() ; ++i){
-            hash = hash * 31 + word.charAt(i);
+        byte[] encodedHash = null;
+        try{
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            encodedHash = digest.digest(
+                    word.getBytes(StandardCharsets.UTF_8));
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return Integer.toString(hash);
+        return encodedHash.toString();
     }
 }

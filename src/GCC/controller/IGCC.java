@@ -14,7 +14,7 @@ public interface IGCC extends Remote {
      * @param password
      * @return true si coinciden
      */
-    boolean login(String user, String password);
+    boolean login(String user, String password) throws RemoteException;
 
     /**
      * Mete a un usuario y su contraseña a la base de datos
@@ -22,6 +22,6 @@ public interface IGCC extends Remote {
      * @param password
      * @return true si lo logra registrar al usuario
      */
-    boolean register(String user, String password);
+    boolean register(String user, String password) throws RemoteException;
 
 }

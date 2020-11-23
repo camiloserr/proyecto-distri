@@ -18,7 +18,7 @@ public class SignUpGUI {
     public SignUpGUI(EPSClient epsClient) {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(100, 100, 300, 200);
+        frame.setBounds(100, 100, 300, 230);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -37,7 +37,7 @@ public class SignUpGUI {
         passwordMs.setBounds(100, 60, 100, 15);
         contentPane.add(passwordMs);
 
-        JTextField passwField = new JTextField();
+        JPasswordField passwField = new JPasswordField();
         passwField.setBounds(100, 78, 100, 15);
         contentPane.add(passwField);
 
@@ -48,6 +48,7 @@ public class SignUpGUI {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 boolean response = epsClient.authSignUp(userField.getText(), passwField.getText());
+                System.out.println(response);
                 if(response){
                     frame.setVisible(false);
                     try{
@@ -61,6 +62,22 @@ public class SignUpGUI {
                     JOptionPane.showMessageDialog(null, "Ocurrión un problema. Intente de nuevo");
                     userField.setText("");
                     passwField.setText("");
+                }
+            }
+        });
+
+        JButton backBtn = new JButton("Atras");
+        backBtn.setBounds(100, 150, 117, 25);
+        contentPane.add(backBtn);
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try{
+                    LandingGUI landingGUI = new LandingGUI();
+                    setVisible(false);
+                    landingGUI.setVisible(true);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         });

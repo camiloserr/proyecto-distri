@@ -1,8 +1,11 @@
 package EPS.views;
 
-import EPS.controller.*;
+import EPS.controller.EPSClient;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EPSInfoGUI {
     private JPanel contentPane;
@@ -28,9 +31,13 @@ public class EPSInfoGUI {
         }
 
         JLabel nameLabel = new JLabel();
-        nameLabel.setBounds(5, 5, 400, 10);
+        nameLabel.setBounds(5, 5, 400, 15);
         nameLabel.setText("Bienvenido: " + userName);
         contentPane.add(nameLabel);
+
+        JButton refreshBtn = new JButton("Refresh");
+        refreshBtn.setBounds(300, 5, 80, 10);
+        contentPane.add(refreshBtn);
 
         JTabbedPane optionPane = new JTabbedPane(JTabbedPane.TOP);
         optionPane.setBounds(16, 16, 480, 480);
@@ -61,6 +68,16 @@ public class EPSInfoGUI {
         epsClient.makeOrder();
         usersInfo.setText(epsClient.getUsrStr());
         transInfo.setText(epsClient.showTransactions());
+
+        refreshBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                epsClient.getUsrList(userName);
+                epsClient.makeOrder();
+                usersInfo.setText(epsClient.getUsrStr());
+                transInfo.setText(epsClient.showTransactions());
+            }
+        });
     }
 
     public void setVisible(boolean value){
