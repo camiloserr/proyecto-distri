@@ -10,5 +10,5 @@ public interface IEPSPersistence {
 
     List<UserInfo> readUsrFromFile();
 
-    void setUserInfo(List<UserInfo> newUsers);
+    boolean setUserInfo(List<UserInfo> newUsers);
 }

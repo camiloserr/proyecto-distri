@@ -33,7 +33,7 @@ public class EPSPersistence implements IEPSPersistence {
         return users;
     }
 
-    public void setUserInfo(List<UserInfo> newUsers){
+    public boolean setUserInfo(List<UserInfo> newUsers){
         String path = "src/EPS/persistence/" + fileName + ".txt";
         try {
             File file = new File(path);
@@ -52,5 +52,6 @@ public class EPSPersistence implements IEPSPersistence {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return true;
     }
 }

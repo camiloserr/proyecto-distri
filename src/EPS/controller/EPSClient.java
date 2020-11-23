@@ -64,7 +64,7 @@ public class EPSClient {
         return usersStr;
     }
 
-    public void makeOrder(){
+    public boolean makeOrder(){
         int[] prepareOrder = {0, 0, 0};
         int pedingAmount = 0;
         for(UserInfo auxUser : users){
@@ -93,6 +93,7 @@ public class EPSClient {
                 e.printStackTrace();
             }
         }
+        return true;
     }
 
     public void changeUsrState(List<Integer>receivedVacs){
