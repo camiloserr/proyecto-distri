@@ -78,6 +78,17 @@ public class EPSClient {
         return usersStr;
     }
 
+    public boolean keepCalling(){
+        boolean call = false;
+
+        for(UserInfo auxUser : users){
+            if(auxUser.equals("Pendiente")){
+                call = true;
+            }
+        }
+        return call;
+    }
+
     /**
      * Hace la orden de las vacunas pendientes en caso de que se necesiten más de 10 vacunas. Modifica el estado de los
      * usuarios que hayan recibido la vacuna. En caso de no ser una transacción finalizada, se aborta.

@@ -31,9 +31,9 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    //LandingGUI window = new LandingGUI();
+                    LandingGUI window = new LandingGUI();
                     //EPSClient epsClient = new EPSClient();
-                    EPSInfoGUI window = new EPSInfoGUI(epsClient, "coomeva");
+                    //EPSInfoGUI window = new EPSInfoGUI(epsClient, "coomeva");
                     window.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

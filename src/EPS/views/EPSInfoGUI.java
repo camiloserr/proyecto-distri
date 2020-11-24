@@ -65,7 +65,6 @@ public class EPSInfoGUI {
         transScroll.setBounds(30, 30, 400, 400);
         trsListPane.add(transScroll);
 
-        epsClient.makeOrder();
         usersInfo.setText(epsClient.getUsrStr());
         transInfo.setText(epsClient.showTransactions());
 
@@ -73,7 +72,9 @@ public class EPSInfoGUI {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 epsClient.getUsrList(userName);
-                epsClient.makeOrder();
+                while (epsClient.keepCalling()){
+                    epsClient.makeOrder();
+                }
                 usersInfo.setText(epsClient.getUsrStr());
                 transInfo.setText(epsClient.showTransactions());
             }
