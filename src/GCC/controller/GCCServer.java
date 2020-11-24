@@ -11,9 +11,8 @@ public class GCCServer {
     public static void main(String[] args) throws RemoteException {
 
         //publico mi servicio
-        System.setProperty("java.rmi.server.hostname","25.0.180.133");
+        System.setProperty("java.rmi.server.hostname","25.96.80.182");
         Registry registry = LocateRegistry.createRegistry(9999);
         registry.rebind("GCC", new GCCServant(new GCCPersistence("src/GCC/persistence/config.txt", "src/GCC/persistence/authentication.txt")));
-
     }
 }

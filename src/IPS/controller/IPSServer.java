@@ -1,5 +1,6 @@
 package IPS.controller;
 
+import IPS.controller.IPSServant;
 import IPS.model.IPSData;
 import IPS.persistence.IPSPersistence;
 
