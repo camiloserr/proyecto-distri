@@ -18,7 +18,7 @@ public class GCCStressTest {
         IGCC gcc = null;
 
         try {
-            gcc = new GCCServant(new GCCPersistence("src/gcc/persistence/config.txt", "src/gcc/persistence/authentication.txt"));
+            gcc = new GCCServant(new GCCPersistence("src/GCC/persistence/config.txt", "src/GCC/persistence/authentication.txt"));
 
         } catch (Exception e) {
             e.printStackTrace();

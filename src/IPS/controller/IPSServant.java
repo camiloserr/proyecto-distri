@@ -44,6 +44,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     public int[] darVacunaActuales() {
 
         int[] vac = {vacunaA, vacunaB, vacunaC};
+        System.out.println("Dando informacion de vacunas...");
         return  vac;
     }
 
@@ -90,6 +91,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
             setVacunaC(0);
         }
 
+        System.out.println("Entregando vacunas\nVac a: "+ getVacunaA() + "\nvac b: " + getVacunaB() + " \nvac c" + getVacunaC()+"\n");
         persistence.saveState(getVacunaA(),getVacunaB(),getVacunaC(),getMinVacunas(),getPeticion());
         return  vlist;
 
@@ -105,7 +107,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         if( vacunaA >= this.minVacunas )
             this.vacunaA = vacunaA;
         else
-            this.vacunaA += peticion;
+            this.vacunaA = vacunaA + peticion;
     }
 
     public int getVacunaB() {
@@ -116,7 +118,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         if( vacunaB >= this.minVacunas )
             this.vacunaB = vacunaB;
         else
-            this.vacunaB += peticion;
+            this.vacunaB = vacunaB + peticion;
     }
 
     public int getVacunaC() {
@@ -127,7 +129,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         if( vacunaC>= this.minVacunas )
             this.vacunaC = vacunaC;
         else
-            this.vacunaC += peticion;
+            this.vacunaC = vacunaC + peticion;
     }
 
     public int getMinVacunas() {

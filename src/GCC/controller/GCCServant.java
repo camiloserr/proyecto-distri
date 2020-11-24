@@ -43,7 +43,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
             try {
                 //inicializa el servicio con los datos obtenidos del archivo de config
                 servicio = (IIPS) Naming.lookup("rmi://" + ips.getIp() + ":" + ips.getPort() + "/" + ips.getName());
-                System.out.println("IPS ENCONTRADA");
+                System.out.println("IPS: " + ips.getName() + " encontrada");
                 ips.setActive(true);
                 services.add(servicio);
 
@@ -143,14 +143,6 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
                 activeServices.get(i).setActive(false);
             }
         }
-
-
         return serviciosQuePuedenResponder.get(new Random().nextInt( serviciosQuePuedenResponder.size()));
     }
-
-
-
-
-
-
 }

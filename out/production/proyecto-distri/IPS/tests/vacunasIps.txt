@@ -1,5 +1,5 @@
-vac1: 45
-vac2: 45
-vac3: 195
-min: 6
-peticion: 30
+vac1: 43
+vac2: 52
+vac3: 22
+min: 8
+peticion: 20
