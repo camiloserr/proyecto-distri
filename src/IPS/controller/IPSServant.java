@@ -107,7 +107,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         if( vacunaA >= this.minVacunas )
             this.vacunaA = vacunaA;
         else
-            this.vacunaA += peticion;
+            this.vacunaA = vacunaA + peticion;
     }
 
     public int getVacunaB() {
@@ -118,7 +118,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         if( vacunaB >= this.minVacunas )
             this.vacunaB = vacunaB;
         else
-            this.vacunaB += peticion;
+            this.vacunaB = vacunaB + peticion;
     }
 
     public int getVacunaC() {
@@ -129,7 +129,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
         if( vacunaC>= this.minVacunas )
             this.vacunaC = vacunaC;
         else
-            this.vacunaC += peticion;
+            this.vacunaC = vacunaC + peticion;
     }
 
     public int getMinVacunas() {

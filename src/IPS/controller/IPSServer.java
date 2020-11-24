@@ -13,11 +13,11 @@ public class IPSServer {
 
         //int port = 8888;
         //String nombre = "IPS";
-        IPSPersistence persistence = new IPSPersistence("src/IPS/tests/vacunasIps.txt","src/IPS/tests/vacunasIps.txt", "src/IPS/tests/ipsData.txt");
+        IPSPersistence persistence = new IPSPersistence("src/IPS/tests/vacunasIps2.txt","src/IPS/tests/vacunasIps2.txt", "src/IPS/tests/ipsData2.txt");
 
         IPSData ips = persistence.readIPSFile();
 
-        System.setProperty("java.rmi.server.hostname","25.96.126.0");
+        System.setProperty("java.rmi.server.hostname","25.96.80.182");
         System.out.println("Registrando IPS...");
         Registry registry = LocateRegistry.createRegistry(ips.getPort());
         registry.rebind(ips.getName(), new IPSServant(persistence));
