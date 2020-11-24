@@ -1,3 +1,6 @@
 IPS:
-    ip: localhost
+    ip: 25.0.180.133
     port: 8888
+IPS2:
+    ip: 25.0.180.133
+    port: 8889

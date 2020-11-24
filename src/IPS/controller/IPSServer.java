@@ -18,6 +18,7 @@ public class IPSServer {
 
         IPSData ips = persistence.readIPSFile();
 
+        System.setProperty("java.rmi.server.hostname","25.96.80.182");
         Registry registry = LocateRegistry.createRegistry(ips.getPort());
         registry.rebind(ips.getName(), new IPSServant(persistence));
 
