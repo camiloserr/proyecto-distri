@@ -18,9 +18,6 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     private int peticion;
     private IPSPersistence persistence;
 
-    // TODO: leer archivo para inicializar #vacuanas, puerto y nombre de la IPS
-
-
     public IPSServant() throws RemoteException {
         super();
     }

@@ -8,7 +8,7 @@ import IPS.controller.IPSServant;
 import IPS.model.IPSData;
 import IPS.persistence.IPSPersistence;
 import org.junit.Test;
-import sun.lwawt.macosx.CSystemTray;
+
 
 import java.rmi.RemoteException;
 import java.time.Instant;

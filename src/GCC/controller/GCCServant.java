@@ -43,6 +43,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
             try {
                 //inicializa el servicio con los datos obtenidos del archivo de config
                 servicio = (IIPS) Naming.lookup("rmi://" + ips.getIp() + ":" + ips.getPort() + "/" + ips.getName());
+                System.out.println("IPS ENCONTRADA");
                 ips.setActive(true);
                 services.add(servicio);
 
@@ -86,6 +87,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
     @Override
     public boolean login(String user, String password) throws RemoteException {
+        System.out.println("Haciendo LOGIN");
         if(usuarios == null){
             usuarios = persistence.getUsers();
         }
@@ -96,6 +98,7 @@ public class GCCServant extends UnicastRemoteObject implements IGCC {
 
     @Override
     public boolean register(String user, String password) {
+        System.out.println("Haciendo REG");
         if(usuarios == null){
             usuarios = persistence.getUsers();
         }
