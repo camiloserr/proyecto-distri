@@ -71,8 +71,9 @@ public class EPSInfoGUI {
         refreshBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                epsClient.getUsrList(userName);
                 while (epsClient.keepCalling()){
+                    System.out.println("Tengo que pedir");
+                    epsClient.getUsrList(userName);
                     epsClient.makeOrder();
                 }
                 usersInfo.setText(epsClient.getUsrStr());

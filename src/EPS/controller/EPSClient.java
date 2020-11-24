@@ -79,14 +79,13 @@ public class EPSClient {
     }
 
     public boolean keepCalling(){
-        boolean call = false;
-
         for(UserInfo auxUser : users){
-            if(auxUser.equals("Pendiente")){
-                call = true;
+            if(auxUser.getState().equals("Pendiente")){
+                System.out.println("Entré");
+                return true;
             }
         }
-        return call;
+        return false;
     }
 
     /**
@@ -95,6 +94,7 @@ public class EPSClient {
      * @return Devuelve true en caso de haber completado la transacción
      */
     public boolean makeOrder(){
+    	System.out.println("Entro a intentar hacer la orden");
         int[] prepareOrder = {0, 0, 0};
         int pedingAmount = 0;
         for(UserInfo auxUser : users){
