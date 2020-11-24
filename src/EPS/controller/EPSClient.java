@@ -27,7 +27,10 @@ public class EPSClient {
      */
     public EPSClient() {
         try {
-            this.servicio = (IGCC) Naming.lookup("rmi://localhost:9999/GCC");
+            //System.setProperty("java.rmi.server.hostname","25.96.80.182:9999/GCC");
+            System.out.println("Buscando GCC");
+            this.servicio = (IGCC) Naming.lookup("rmi://25.96.80.182:9999/GCC");
+            System.out.println("Llegué acá");
             this.vaccineManager = new VaccineManager(this.servicio);
         } catch (Exception var2) {
             System.err.println("Client exception: " + var2.toString());
