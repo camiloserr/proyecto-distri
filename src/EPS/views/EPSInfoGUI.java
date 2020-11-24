@@ -47,22 +47,24 @@ public class EPSInfoGUI {
         optionPane.addTab("Usuarios", null, usrListPane, null);
 
         JTextArea usersInfo = new JTextArea();
-        usersInfo.setLineWrap(true);
-        usersInfo.setBounds(30, 30, 460, 479);
-        usersInfo.setEditable(true);
+        //usersInfo.setLineWrap(true);
+        usersInfo.setBounds(30, 30, 400, 200);
+        usersInfo.setEditable(false);
         JScrollPane userScroll = new JScrollPane(usersInfo);
-        userScroll.setBounds(30, 30, 400, 400);
+        userScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        userScroll.setBounds(30, 30, 400, 200);
         usrListPane.add(userScroll);
 
         JPanel trsListPane = new JPanel();
         optionPane.addTab("Transacciones", null, trsListPane, null);
 
         JTextArea transInfo = new JTextArea();
-        transInfo.setLineWrap(true);
-        transInfo.setBounds(30, 30, 460, 460);
-        transInfo.setEditable(true);
+        //transInfo.setLineWrap(true);
+        transInfo.setBounds(30, 30, 400, 200);
+        transInfo.setEditable(false);
         JScrollPane transScroll = new JScrollPane(transInfo);
-        transScroll.setBounds(30, 30, 400, 400);
+        transScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        transScroll.setBounds(30, 30, 400, 200);
         trsListPane.add(transScroll);
 
         usersInfo.setText(epsClient.getUsrStr());
@@ -71,13 +73,14 @@ public class EPSInfoGUI {
         refreshBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                while (epsClient.keepCalling()){
+                boolean aux = true;
+                epsClient.getUsrList(userName);
+                while (epsClient.keepCalling() && aux){
                     System.out.println("Tengo que pedir");
-                    epsClient.getUsrList(userName);
-                    epsClient.makeOrder();
+                    aux = epsClient.makeOrder();
+                    usersInfo.setText(epsClient.getUsrStr());
+                    transInfo.setText(epsClient.showTransactions());
                 }
-                usersInfo.setText(epsClient.getUsrStr());
-                transInfo.setText(epsClient.showTransactions());
             }
         });
     }

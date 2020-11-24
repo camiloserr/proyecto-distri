@@ -29,7 +29,7 @@ public class EPSClient {
         try {
             //System.setProperty("java.rmi.server.hostname","25.96.80.182:9999/GCC");
             System.out.println("Buscando GCC");
-            this.servicio = (IGCC) Naming.lookup("rmi://25.96.80.182:9999/GCC");
+            this.servicio = (IGCC) Naming.lookup("rmi://25.96.126.0:9999/GCC");
             System.out.println("Llegué acá");
             this.vaccineManager = new VaccineManager(this.servicio);
         } catch (Exception var2) {
@@ -97,11 +97,13 @@ public class EPSClient {
     	System.out.println("Entro a intentar hacer la orden");
         int[] prepareOrder = {0, 0, 0};
         int pedingAmount = 0;
+        int i = 0;
         for(UserInfo auxUser : users){
             if(auxUser.getState().equals("Pendiente")){
                 pedingAmount += 1;
             }
         }
+        System.out.println("Tengo que pedir " + pedingAmount);
         if(9 < pedingAmount){
             for(UserInfo auxUser : users){
                 if(!auxUser.getState().equals("Recibida")){
@@ -122,6 +124,14 @@ public class EPSClient {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+        else{
+            return false;
+        }
+        try{
+            vaccineManager.resetOrder();
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return true;
     }
