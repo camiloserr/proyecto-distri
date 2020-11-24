@@ -35,6 +35,8 @@ public class Main {
                     //EPSClient epsClient = new EPSClient();
                     //EPSInfoGUI window = new EPSInfoGUI(epsClient, "coomeva");
                     window.setVisible(true);
+                    System.out.println("Despues de darle true");
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

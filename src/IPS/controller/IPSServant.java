@@ -44,6 +44,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
     public int[] darVacunaActuales() {
 
         int[] vac = {vacunaA, vacunaB, vacunaC};
+        System.out.println("Dando informacion de vacunas...");
         return  vac;
     }
 
@@ -90,6 +91,7 @@ public class IPSServant extends UnicastRemoteObject implements IIPS {
             setVacunaC(0);
         }
 
+        System.out.println("Entregando vacunas\nVac a: "+ getVacunaA() + "\nvac b: " + getVacunaB() + " \nvac c" + getVacunaC()+"\n");
         persistence.saveState(getVacunaA(),getVacunaB(),getVacunaC(),getMinVacunas(),getPeticion());
         return  vlist;
 
