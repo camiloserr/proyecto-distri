@@ -78,12 +78,23 @@ public class EPSClient {
         return usersStr;
     }
 
+    public boolean keepCalling(){
+        for(UserInfo auxUser : users){
+            if(auxUser.getState().equals("Pendiente")){
+                System.out.println("Entré");
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Hace la orden de las vacunas pendientes en caso de que se necesiten más de 10 vacunas. Modifica el estado de los
      * usuarios que hayan recibido la vacuna. En caso de no ser una transacción finalizada, se aborta.
      * @return Devuelve true en caso de haber completado la transacción
      */
     public boolean makeOrder(){
+    	System.out.println("Entro a intentar hacer la orden");
         int[] prepareOrder = {0, 0, 0};
         int pedingAmount = 0;
         for(UserInfo auxUser : users){

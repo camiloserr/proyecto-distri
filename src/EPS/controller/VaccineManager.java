@@ -51,9 +51,8 @@ public class VaccineManager {
         List<Integer> vacRecib = gcc.pedirVacunas(currentOrder[0], currentOrder[1], currentOrder[2]);
         // como el gcc tal vaz no responde con todas las vacunas, las vacunas que no fueron recibidas se mantienen
         // en la orden para ser pedidas en la proxima orden
-        for(int i = 0 ; i<vacRecib.size() ; ++i){
+        for(int i = 0 ; i < vacRecib.size() ; ++i){
             currentOrder[i] = vacRecib.get(i);
-
         }
 
         return vacRecib;
